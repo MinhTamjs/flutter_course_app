@@ -9,10 +9,9 @@ import 'package:flutter_course_app/features/authentication/domain/usecases/creat
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
+import 'authetication_repository.mock.dart';
 
-class MockAuthRepo extends Mock implements AuthenticationRepository{
 
-}
 
 void main() {
   late CreateUser usecase;
