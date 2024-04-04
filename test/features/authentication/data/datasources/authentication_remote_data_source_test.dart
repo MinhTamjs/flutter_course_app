@@ -37,14 +37,13 @@ void main() {
           ),
           completes);
       verify(
-        () => client.post(
-          Uri.https(kBaseUrl, kCreateUserEndpoint),
-          body: jsonEncode({
-            'createdAt': 'createdAt',
-            'name': 'name',
-            'avatar': 'avatar',
-          }),
-        ),
+        () => client.post(Uri.https(kBaseUrl, kCreateUserEndpoint),
+            body: jsonEncode({
+              'createdAt': 'createdAt',
+              'name': 'name',
+              'avatar': 'avatar',
+            }),
+            headers: {'Content-Type': 'application-json'}),
       ).called(1);
       verifyNoMoreInteractions(client);
     });

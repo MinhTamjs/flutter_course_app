@@ -17,7 +17,7 @@ abstract class AuthenticationRemoteDataSource {
 }
 
 const kCreateUserEndpoint = '/test_api/users';
-const kGetUsersEndPoint = '/test_api/user';
+const kGetUsersEndPoint = '/test_api/users';
 
 class AuthRemoteDataSrcImpl implements AuthenticationRemoteDataSource {
   const AuthRemoteDataSrcImpl(this._client);
@@ -32,14 +32,14 @@ class AuthRemoteDataSrcImpl implements AuthenticationRemoteDataSource {
     // 2. Check to make sure that it "THOWS A CUSTOM EXCEPTION" with the right message when status code is the bad one
 
     try {
-      final response = await _client.post(
-        Uri.https(kBaseUrl, kCreateUserEndpoint),
-        body: jsonEncode({
-          'createdAt': createdAt,
-          'name': name,
-          'avatar': avatar,
-        }),
-      );
+      final response =
+          await _client.post(Uri.https(kBaseUrl, kCreateUserEndpoint),
+              body: jsonEncode({
+                'createdAt': createdAt,
+                'name': name,
+                //'avatar': avatar, //remove this to let mock get avatar ramdomly
+              }),
+              headers: {'Content-Type': 'application/json'});
       if (response.statusCode != 200 && response.statusCode != 201) {
         throw APIException(
           message: response.body,
@@ -57,7 +57,7 @@ class AuthRemoteDataSrcImpl implements AuthenticationRemoteDataSource {
   Future<List<UserModel>> getUsers() async {
     try {
       final response = await _client.get(
-        Uri.http(kBaseUrl, kGetUsersEndPoint),
+        Uri.https(kBaseUrl, kGetUsersEndPoint),
       );
       if (response.statusCode != 200) {
         throw APIException(
